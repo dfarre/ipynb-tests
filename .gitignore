@@ -12,5 +12,8 @@ build
 htmlcov
 .tox
 
+.ipynb_checkpoints/
+tests/notebooks/*.html
+
 .msg
 .secrets.ini

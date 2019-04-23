@@ -1,20 +1,17 @@
-import sys
+import unittest
 
-from simple_cmd import commands
-
-
-class DivideArray(commands.ErrorsCommand):
-    arguments = ((('num',), dict(nargs='+', type=int, help='int list')),
-                 (('--divide', '-d'), dict(default=1, type=int)))
-    exceptions = (ZeroDivisionError,)
-
-    def try_call(self, **kwargs):
-        result = [n/kwargs['divide'] for n in kwargs.pop('num')]
-        sys.stdout.write(f'{result}\n')
-
-    def finally_call(self, **kwargs):
-        sys.stdout.write(f'kwargs={kwargs} Exit {self.last_exit}\n')
+from ipynb_tests import tester
 
 
-if __name__ == '__main__':
-    sys.exit(DivideArray()())
+class Tests(tester.NotebookTester, unittest.TestCase):
+    notebooks_path = 'tests/notebooks/'
+
+    def check_no_raise(self, soup):
+        output = self.assert_cell_stdout(soup, 1)
+
+        assert output.find('pre').string.strip() == ':-('
+
+    def check_with_raises(self, soup):
+        output = self.assert_cell_stdout(soup, 4)
+
+        assert output.find('pre').string.strip() == ':-)'
