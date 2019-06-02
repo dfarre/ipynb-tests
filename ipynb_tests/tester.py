@@ -20,7 +20,8 @@ class NotebookTester:
 
     def execute(self, name, path):
         subprocess.Popen([
-            'jupyter', 'nbconvert', '--execute', '--allow-errors', path
+            'jupyter', 'nbconvert', '--execute', '--allow-errors',
+            '--ExecutePreprocessor.timeout=-1', path
         ]).communicate()
         html_path = os.path.abspath(re.sub(r'.ipynb$', '.html', path))
 

@@ -4,10 +4,11 @@ import unittest
 HEAD = """
 ============================= test session starts ==============================
 platform linux -- Python [L1-4]
-collecting ... collected 3 items
+collecting ... collected 4 items
 
-tests/example.py::Tests::test_no_check PASSED                            [ 33%]
-tests/example.py::Tests::test_no_raise FAILED                            [ 66%]
+tests/example.py::Tests::test_no_check PASSED                            [ 25%]
+tests/example.py::Tests::test_no_raise FAILED                            [ 50%]
+tests/example.py::Tests::test_timeout PASSED                             [ 75%]
 tests/example.py::Tests::test_with_raises FAILED                         [100%]
 
 =================================== FAILURES ===================================
@@ -28,7 +29,7 @@ class NotebookTesterTests(unittest.TestCase):
             ['pytest', '-v', 'tests/example.py'], stdout=subprocess.PIPE
         ).stdout.decode().splitlines()
         short_lines = [lines[0], 'platform linux -- Python [L1-4]'] + lines[5:]
-        head, tail = '\n'.join(short_lines[:9]), '\n'.join(short_lines[9:])
+        head, tail = '\n'.join(short_lines[:10]), '\n'.join(short_lines[10:])
 
         assert head == HEAD
         assert CHECK_ERROR in tail
